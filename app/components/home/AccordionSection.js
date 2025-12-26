@@ -256,7 +256,7 @@ function AccordionItem({ feature, isOpen, onToggle }) {
           setTimeout(() => {
             setShowOutput((prev) => ({ ...prev, [idx]: true }));
             setStartTyping((prev) => ({ ...prev, [idx]: true }));
-          }, 1500);
+          }, 750);
         } else {
           newShowOutput[idx] = true;
           newStartTyping[idx] = true;
@@ -339,54 +339,69 @@ function AccordionItem({ feature, isOpen, onToggle }) {
           {/* Technical Proof Section */}
           <div className="bg-black backdrop-blur-sm border border-brand-border rounded-lg p-2 md:p-4">
             {feature.tag === "AI_COMPOSER" ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Left side - Code */}
-                <div className="font-mono text-sm whitespace-pre-wrap">
-                  {feature.technicalProof.lines.map((line, idx) => (
-                    <span
-                      key={idx}
-                      className={
-                        line.type === "arrow"
-                          ? "text-brand-orange"
-                          : line.type === "output"
-                          ? "text-[#86efac]"
-                          : "text-brand-text"
-                      }
-                    >
-                      {line.type === "output" && !showOutput[idx] ? (
-                        <LoadingDots />
-                      ) : Array.isArray(line.text) ? (
-                        line.text.join("")
-                      ) : (
-                        line.text
-                      )}
-                    </span>
-                  ))}
+              <div className="flex flex-col gap-4">
+                {/*  Top Row: Prompt + Arrow + Loader  */}
+                <div className="md:flex items-center gap-3 font-mono text-sm">
+                  {feature.technicalProof.lines.map((line, idx) => {
+                    if (line.type === "prompt") {
+                      return (
+                        <span key={idx} className="text-brand-text">
+                          {line.text}
+                        </span>
+                      );
+                    }
+
+                    if (line.type === "arrow") {
+                      return (
+                        <span key={idx} className="text-brand-orange">
+                          {line.text}
+                        </span>
+                      );
+                    }
+
+                    if (line.type === "output" && !showOutput[idx]) {
+                      return (
+                        <span key={idx}>
+                          <LoadingDots />
+                        </span>
+                      );
+                    }
+
+                    return null;
+                  })}
                 </div>
 
-                {/* Right side - Email Preview */}
-                <div className="border border-brand-border rounded bg-white p-4 max-h-[260px] overflow-auto md:max-h-none">
-                  {showOutput[2] ? (
-                    <div className="font-sans">
-                      <h2 className="text-xl font-semibold mb-3 text-gray-900">
-                        Welcome!
-                      </h2>
-                      <p className="text-gray-700 mb-4">
-                        Thanks for signing up.
-                      </p>
-                      <a
-                        href="#"
-                        className="inline-block bg-brand-orange text-white px-6 py-2 rounded hover:bg-orange-600 transition-colors"
-                      >
-                        Get Started
-                      </a>
+                {/* ───────────── Bottom Row: Code + Output ───────────── */}
+                {showOutput[2] && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Left: Raw Generated HTML (UNCHANGED STYLE) */}
+                    <div className="font-mono text-sm whitespace-pre-wrap text-[#86efac]">
+                      {feature.technicalProof.lines
+                        .filter((l) => l.type === "output")
+                        .map((l) =>
+                          Array.isArray(l.text) ? l.text.join("") : l.text
+                        )}
                     </div>
-                  ) : (
-                    <div className="flex items-center justify-center h-full text-brand-textMuted">
-                      <LoadingDots />
+
+                    {/* Right: Email Preview (EXACT PREVIOUS DESIGN) */}
+                    <div className="border border-brand-border rounded bg-white p-4 max-h-[260px] overflow-auto md:max-h-none">
+                      <div className="font-sans">
+                        <h2 className="text-xl font-semibold mb-3 text-gray-900">
+                          Welcome!
+                        </h2>
+                        <p className="text-gray-700 mb-4">
+                          Thanks for signing up.
+                        </p>
+                        <a
+                          href="#"
+                          className="inline-block bg-brand-orange text-white px-6 py-2 rounded hover:bg-orange-600 transition-colors"
+                        >
+                          Get Started
+                        </a>
+                      </div>
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             ) : feature.tag === "AUTOMATION_MAP" ? (
               <div className="flex flex-col gap-4">
@@ -433,7 +448,7 @@ function AccordionItem({ feature, isOpen, onToggle }) {
 
                 {/* Bottom - Node Map Preview */}
                 {showNodeMap && (
-                  <div className="border border-brand-border rounded bg-white p-4">
+                  <div className="border border-brand-border rounded bg-white p-2 md:p-4">
                     <IntelligentFlowDiagram />
                   </div>
                 )}
@@ -507,7 +522,7 @@ export default function AccordionSection({ title, subtitle, features, id }) {
   return (
     <section
       id={id}
-      className="ppy-16 md:py-24 bg-brand-black relative overflow-hidden"
+      className="py-16 md:py-24 bg-brand-black relative overflow-hidden"
     >
       <div className="max-w-5xl mx-auto px-2.5 md:px-6">
         {/* Header */}

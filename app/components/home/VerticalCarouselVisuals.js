@@ -16,7 +16,7 @@ export function ComposerVisual() {
             Button <span className="text-brand-orange">◉</span>
           </div>
         </div>
-        <h4 className="font-bold text-sm mt-6 mb-3 text-white">AI Copilot</h4>
+        <h4 className="font-bold text-sm mt-6 mb-3 text-white">AI AIAIAIA</h4>
         <div className="p-3 bg-brand-orange/10 border border-brand-orange/30 rounded-lg text-xs text-gray-300">
           "Draft a subject line that increases open rate by 15%."
         </div>
@@ -25,7 +25,7 @@ export function ComposerVisual() {
       <div className="w-3/4 pl-6 relative">
         <div className="h-full border border-dashed border-brand-border p-4 rounded-md overflow-y-auto">
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h5 className="text-xl font-bold text-black mb-2">👋 Welcome, [FIRST_NAME]!</h5>
+            <h5 className="text-xl font-bold text-red-500 mb-2">👋 Welcome, [FIRST_NAME]!</h5>
             <p className="text-gray-600 mb-4 text-sm">
               Thanks for joining the waitlist! Our AI noticed you're interested in scaling SaaS marketing.
             </p>

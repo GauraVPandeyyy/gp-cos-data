@@ -54,7 +54,7 @@ export const AI_FEATURES = [
       lines: [
         { type: "goal", text: ["Goal: Increase trial conversion"] },
         // { type: "arrow", text: "→" },
-        { type: "output", text: "Generating a 7-step funnel node map" },
+        { type: "output", text: "Generating a 6-step funnel node map" },
       ],
     },
   },

@@ -121,7 +121,7 @@ export default function Hero({ isLoaderComplete }) {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-orange opacity-[0.03] blur-[120px] rounded-full animate-pulse-slow"></div>
       {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30vw] h-[30vw] bg-brand-orange opacity-[0.03] blur-[120px] rounded-full animate-pulse-slow"></div> */}
 
-      <div className="relative max-w-7xl mx-auto px-6 2xl:px-[1.67vw] text-center z-10 min-w-0">
+      <div className="relative max-w-7xl mx-auto px-[7px] md:px-6 2xl:px-[1.67vw] text-center z-10 min-w-0">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-border bg-brand-surface/50 mb-8 hero-stagger opacity-0 backdrop-blur-sm">
           {/* Badge content if needed */}
         </div>
@@ -129,7 +129,7 @@ export default function Hero({ isLoaderComplete }) {
         <h1
           ref={titleRef}
           id="hero-title"
-          className="text-4xl md:text-7xl lg:text-8xl xl:text-[7rem] font-bold leading-[1.05] mb-6 text-center"
+          className="text-[40px] sm:text-[60px] md:text-7xl lg:text-8xl xl:text-[7rem] font-bold leading-[1.05] mb-6 text-center"
         >
           {!titleReady ? (
             // Render invisible placeholder during initial render

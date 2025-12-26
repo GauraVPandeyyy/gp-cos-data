@@ -37,15 +37,15 @@ export default function VerticalCarouselSinSec() {
   const carouselRef = useRef(null);
   const totalCards = features.length;
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isAnimating && !isPaused) {
-        nextCard();
-      }
-    }, 3000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (!isAnimating && !isPaused) {
+  //       nextCard();
+  //     }
+  //   }, 3000);
 
-    return () => clearInterval(interval);
-  }, [currentIndex, isAnimating, isPaused]);
+  //   return () => clearInterval(interval);
+  // }, [currentIndex, isAnimating, isPaused]);
 
   useEffect(() => {
     const carousel = carouselRef.current;
@@ -282,7 +282,10 @@ function ComposerVisual() {
                     <div>
                       <h5 className="text-2xl font-bold text-slate-900 tracking-tight">
                         Welcome,{" "}
-                        <span className="text-orange-600">[FIRST_NAME]</span>!
+                        <span className="text-orange-600">
+                          {"{ FIRST_NAME }"}
+                        </span>
+                        !
                       </h5>
                       <p className="text-xs text-slate-500 font-medium">
                         Your journey starts here
@@ -445,9 +448,17 @@ function AutomationVisual() {
                 <div className="h-4 w-px bg-zinc-300 mx-auto my-1"></div>
 
                 {/* Conditional Split */}
-                <div className="flex gap-2">
+                <div className="relative flex gap-2">
+                  {/* Horizontal connector */}
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-zinc-300 mb-5"></div>
+                  {/* Left vertical connector (to IF) */}
+                  <div className="absolute top-0 left-1/4 h-4 w-px bg-zinc-300"></div>
+
+                  {/* Right vertical connector (to ELSE) */}
+                  <div className="absolute top-0 left-3/4 h-4 w-px bg-zinc-300"></div>
+
                   {/* YES Path */}
-                  <div className="flex flex-col items-center w-1/2">
+                  <div className="flex flex-col items-center w-1/2 pt-5">
                     <div className="p-1.5 bg-blue-700/50 border border-blue-500 rounded text-[10px] font-bold text-white text-center relative">
                       IF: Clicked (45%)
                     </div>
@@ -465,7 +476,7 @@ function AutomationVisual() {
                   </div>
 
                   {/* NO Path */}
-                  <div className="flex flex-col items-center w-1/2">
+                  <div className="flex flex-col items-center w-1/2 pt-5">
                     <div className="p-1.5 bg-red-700/50 border border-red-500 rounded text-[10px] font-bold text-white text-center relative">
                       ELSE (55%)
                     </div>
@@ -908,8 +919,19 @@ function AutomationVisualMobile() {
                 <div className="h-3 w-px bg-zinc-300 mx-auto my-1"></div>
 
                 {/* Conditional Split Label */}
-                <div className="text-[9px] text-gray-600 text-center font-semibold mb-2">
-                  IF: Email Clicked?
+                {/* Conditional Split */}
+                <div className="relative flex justify-center mb-2">
+                  {/* Horizontal connector */}
+                  <div className="absolute top-3 mx-auto h-3 w-px bg-zinc-300"></div>
+                  <div className="absolute top-6 w-1/2 h-px bg-zinc-300"></div>
+
+                  {/* Vertical connectors */}
+                  <div className="absolute top-6 left-1/4 h-3 w-px bg-zinc-300"></div>
+                  <div className="absolute top-6 left-3/4 h-3 w-px bg-zinc-300"></div>
+
+                  <div className="text-[9px] text-gray-600 font-semibold mb-5">
+                    IF: Email Clicked?
+                  </div>
                 </div>
 
                 {/* Split Paths */}

@@ -24,7 +24,7 @@ function Loader({ onComplete }) {
     }, {
       y: 0,
       opacity: 1,
-      duration: 1,
+      duration: 0.8,
       ease: "power3.out",
     }, 1)
 
@@ -34,7 +34,7 @@ function Loader({ onComplete }) {
     }, {
       y: 0,
       opacity: 1,
-      duration: 1,
+      duration: 0.8,
       ease: "power3.out",
     }, 0)
 
@@ -44,7 +44,7 @@ function Loader({ onComplete }) {
     }, {
       y: 0,
       opacity: 1,
-      duration: 1,
+      duration: 0.8,
       ease: "power3.out",
     }, 1)
 
@@ -56,7 +56,7 @@ function Loader({ onComplete }) {
 
     .to(glowProxy, {
       opacity: 0.9,
-      duration: 0.6,
+      duration: 0.5,
       ease: "power2.out",
       onUpdate: () => {
         setGlowOpacity(glowProxy.opacity);
@@ -66,7 +66,7 @@ function Loader({ onComplete }) {
     // Fade out the entire loader and call onComplete
     .to(loaderRef.current, {
       opacity: 0,
-      duration: 0.6,
+      duration: 0.3,
       ease: "power2.inOut",
       onComplete: () => onComplete?.(),
     });
