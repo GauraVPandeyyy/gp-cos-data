@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { Sparkles, GitBranch, BarChart3 } from "lucide-react";
 
+// --- Configuration Data ---
 const features = [
   {
     icon: Sparkles,
@@ -31,168 +32,151 @@ const features = [
 ];
 
 export default function VerticalCarouselSinSec() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const carouselRef = useRef(null);
-  const totalCards = features.length;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const cardsRef = useRef([]);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (!isAnimating && !isPaused) {
-  //       nextCard();
-  //     }
-  //   }, 3000);
-
-  //   return () => clearInterval(interval);
-  // }, [currentIndex, isAnimating, isPaused]);
-
+  // Logic to track which card is currently visible for the Dots
   useEffect(() => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
-
-    const handleWheel = (e) => {
-      if (isAnimating) return;
-
-      const isScrollingDown = e.deltaY > 0;
-      const isScrollingUp = e.deltaY < 0;
-
-      // Allow natural page scroll AFTER last card
-      if (
-        (isScrollingDown && currentIndex === totalCards - 1) ||
-        (isScrollingUp && currentIndex === 0)
-      ) {
-        return;
-      }
-
-      e.preventDefault();
-
-      if (isScrollingDown) {
-        goToCard(currentIndex + 1);
-      } else if (isScrollingUp) {
-        goToCard(currentIndex - 1);
-      }
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -20% 0px", // Trigger when card is near center
+      threshold: 0.1,
     };
 
-    carousel.addEventListener("wheel", handleWheel, { passive: false });
-
-    return () => {
-      carousel.removeEventListener("wheel", handleWheel);
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = Number(entry.target.getAttribute("data-index"));
+          setActiveIndex(index);
+        }
+      });
     };
-  }, [currentIndex, isAnimating, totalCards]);
 
-  // const nextCard = () => {
-  //   setIsAnimating(true);
-  //   setTimeout(() => {
-  //     setCurrentIndex((prev) => (prev + 1) % totalCards);
-  //     setIsAnimating(false);
-  //   }, 300);
-  // };
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-  const goToCard = (index) => {
-    if (index !== currentIndex && !isAnimating) {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setCurrentIndex(index);
-        setIsAnimating(false);
-      }, 300);
-    }
-  };
+    cardsRef.current.forEach((card) => {
+      if (card) observer.observe(card);
+    });
 
-  const currentFeature = features[currentIndex];
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section
-      id="carousel-section"
-      className="py-12 md:py-24 bg-transparent relative overflow-hidden"
-    >
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="text-center mb-8 md:mb-16">
-          <p className="text-xs font-mono text-orange-500 uppercase tracking-widest mb-3">
-            Core Capabilities
-          </p>
-          <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold tracking-tight text-white">
-            Experience The INWREN Difference
-          </h2>
-        </div>
-
-        {/* Carousel Container */}
-        <div className="relative flex gap-4 md:gap-8 justify-center items-center">
-          {/* Progress Dots - Left Side (hidden on mobile) */}
-          <div className="hidden md:flex flex-col justify-center gap-4">
-            {features.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToCard(index)}
-                className={`w-2 rounded-full transition-all duration-300 ${
-                  index === currentIndex
-                    ? "bg-orange-500 h-8"
-                    : "bg-gray-700 hover:bg-orange-500/50 h-2"
-                }`}
-                aria-label={`Go to card ${index + 1}`}
-              ></button>
-            ))}
-          </div>
-
-          {/* Progress Dots - Bottom (visible on mobile only) */}
-          <div className="md:hidden absolute -bottom-6 left-0 right-0 flex justify-center gap-2">
-            {features.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToCard(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  index === currentIndex
-                    ? "bg-orange-500 w-8"
-                    : "bg-gray-700 w-2"
-                }`}
-                aria-label={`Go to card ${index + 1}`}
-              ></button>
-            ))}
-          </div>
-
-          {/* Card Display Area */}
-          {/* h-[600px] md:h-[500px] lg:h-[670px] */}
+    <div className="bg-transparent z-0 relative">
+      {/* Fixed Navigation Dots 
+        Ye screen par chipke rahenge jab cards scroll honge
+      */}
+      {/* <div className="fixed right-4 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-4 pointer-events-none">
+        {features.map((_, index) => (
           <div
-            ref={carouselRef}
-            className="relative w-full max-w-[1400px] h-[600px] md:h-[500px] lg:h-[670px]"
-            // onMouseEnter={() => setIsPaused(true)}
-            // onMouseLeave={() => setIsPaused(false)}
-          >
-            <div
-              className={`w-full h-full transition-all duration-300 ease-in-out ${
-                isAnimating ? "scale-90 opacity-0" : "scale-100 opacity-100"
-              }`}
-            >
-              <div className="glass-card rounded-2xl md:rounded-3xl overflow-hidden h-full">
-                <div className="flex flex-col h-full">
-                  {/* Header */}
-                  <div className="bg-zinc-900 pt-4 px-4 md:pt-10 md:px-10">
-                    <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-[15vw] mb-2">
-                      <currentFeature.icon className="w-6 h-6 md:w-8 md:h-8 text-orange-500" />
-                      <h3 className="text-xl md:text-3xl font-bold text-white">
-                        {currentFeature.title}{" "}
-                        <span className="text-orange-500">
-                          ({currentFeature.subtitle})
-                        </span>
-                      </h3>
-                    </div>
-                    <p className="text-gray-400 text-sm md:text-base max-w-lg text-left md:text-center md:mx-auto pb-4 md:pb-0">
-                      {currentFeature.description}
-                    </p>
-                  </div>
+            key={index}
+            className={`w-2 rounded-full transition-all duration-500 ease-out ${
+              index === activeIndex
+                ? "bg-orange-500 h-8"
+                : "bg-gray-800 h-2"
+            }`}
+          />
+        ))}
+      </div> */}
 
-                  {/* Content */}
-                  <div className=" bg-zinc-950 border-t border-zinc-800 pt-2 px-2 md:pt-6 md:px-6 shadow-2xl">
-                    {/* Desktop Visuals (hidden on mobile) */}
-                    <div className="hidden md:block h-full">
+      {/* Mobile Dots (Bottom Fixed) */}
+      {/* <div className="fixed bottom-6 left-0 right-0 z-50 flex justify-center gap-2 md:hidden pointer-events-none">
+        {features.map((_, index) => (
+          <div
+            key={index}
+            className={`h-2 rounded-full transition-all duration-500 ease-out shadow-lg ${
+              index === activeIndex
+                ? "bg-orange-500 w-8"
+                : "bg-gray-800 w-2"
+            }`}
+          />
+        ))}
+      </div> */}
+
+      {/* Title Section
+        Ye normal scroll karega, fir cards iske upar aa jayenge
+      */}
+      <div className="pt-24 pb-12 z-0 md:pt-32 md:pb-16 px-4 text-center max-w-7xl mx-auto">
+        <p className="text-xs font-mono text-orange-500 uppercase tracking-widest mb-3">
+          Core Capabilities
+        </p>
+        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6">
+          Experience The INWREN Difference
+        </h2>
+        <p className="text-gray-400 max-w-2xl mx-auto text-lg font-light">
+          Scroll down to explore our powerful features designed to scale your
+          growth.
+        </p>
+      </div>
+
+      {/* Stacked Cards Section 
+        Yahan magic hota hai: sticky + top-0 + z-index
+      */}
+      <div className="relative w-full ">
+        {features.map((feature, index) => {
+            const isLast = index === features.length - 1;
+            
+            return (
+          <section
+            key={index}
+            ref={(el) => (cardsRef.current[index] = el)}
+            data-index={index}
+            className="sticky top-0 h-screen w-screen flex items-center justify-center overflow-hidden border-t border-zinc-900/50"
+            style={{ 
+                zIndex: index + 10, // Higher index means it stacks on top
+                backgroundColor: '#09090b' // bg-zinc-950 (Hardcoded hex to ensure opacity)
+            }} 
+          >
+            {/* Background Glow Effect per card */}
+            <div className="absolute inset-0 pointer-events-none opacity-20">
+                {/* <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-orange-500/10 blur-[100px] rounded-full`}></div> */}
+            </div>
+
+            <div className="relative w-full max-w-7xl mx-auto px-4 md:px-6 h-full flex flex-col justify-center">
+              
+              {/* Main Card Container */}
+              <div className="w-full h-[85vh] md:h-[80vh] bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
+                
+                {/* Text Content (Left Side) */}
+                <div className="md:w-1/3 p-6 md:p-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-white/5 bg-zinc-900/60 z-10">
+                  <div className="inline-flex items-center gap-2 mb-4">
+                    <div className="p-2 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-500">
+                        <feature.icon size={24} />
+                    </div>
+                    <span className="text-xs font-mono text-orange-500/80">0{index + 1}</span>
+                  </div>
+                  
+                  <h3 className="text-2xl md:text-4xl font-bold text-white mb-2 leading-tight">
+                    {feature.title}
+                  </h3>
+                  <div className="text-lg text-orange-500 font-medium mb-4">
+                    {feature.subtitle}
+                  </div>
+                  <p className="text-gray-400 leading-relaxed text-sm md:text-base">
+                    {feature.description}
+                  </p>
+                </div>
+
+                {/* Visual Content (Right Side) */}
+                <div className="md:w-2/3 h-full bg-zinc-950 relative overflow-hidden">
+                   {/* Gradient Overlay for smooth edge */}
+                   {/* <div className="absolute inset-0 bg-gradient-to-br from-zinc-900/50 to-transparent pointer-events-none z-10"></div> */}
+                   
+                   {/* <div className="h-full w-full p-2 md:p-6 overflow-hidden">
+                      {feature.visual === "composer" && <ComposerVisual />}
+                      {feature.visual === "automation" && <AutomationVisual />}
+                      {feature.visual === "analytics" && <AnalyticsVisual />}
+                   </div> */}
+
+                   <div className="hidden md:block h-full">
                       <div className="mx-auto h-full w-full md:w-[1000px] max-w-full overflow-hidden">
-                        {currentFeature.visual === "composer" && (
+                        {feature.visual === "composer" && (
                           <ComposerVisual />
                         )}
-                        {currentFeature.visual === "automation" && (
+                        {feature.visual === "automation" && (
                           <AutomationVisual />
                         )}
-                        {currentFeature.visual === "analytics" && (
+                        {feature.visual === "analytics" && (
                           <AnalyticsVisual />
                         )}
                       </div>
@@ -200,24 +184,27 @@ export default function VerticalCarouselSinSec() {
 
                     {/* Mobile Visuals (visible on mobile only) */}
                     <div className="md:hidden h-full w-full">
-                      {currentFeature.visual === "composer" && (
+                      {feature.visual === "composer" && (
                         <ComposerVisualMobile />
                       )}
-                      {currentFeature.visual === "automation" && (
+                      {feature.visual === "automation" && (
                         <AutomationVisualMobile />
                       )}
-                      {currentFeature.visual === "analytics" && (
+                      {feature.visual === "analytics" && (
                         <AnalyticsVisualMobile />
                       )}
                     </div>
-                  </div>
                 </div>
               </div>
+
             </div>
-          </div>
-        </div>
+          </section>
+        )})}
       </div>
-    </section>
+
+      {/* Footer Buffer (Optional, to allow full scroll of last card) */}
+      {/* <div className="h-[20vh] bg-zinc-950"></div> */}
+    </div>
   );
 }
 

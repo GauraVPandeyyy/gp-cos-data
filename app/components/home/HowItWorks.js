@@ -15,8 +15,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HowItWorks() {
-  const sectionRef = useRef(null);
-  const cardsRef = useRef([]);
+  // const sectionRef = useRef(null);
+  // const cardsRef = useRef([]);
 
   // useEffect(() => {
   // if (!sectionRef.current) return;
@@ -27,7 +27,7 @@ export default function HowItWorks() {
   //     {
   //       y: 0,
   //       opacity: 1,
-  //       duration: 0.9,
+  //       duration: 0.8,
   //       ease: "power3.out",
   //       stagger: 0.15,
   //       scrollTrigger: {
@@ -40,7 +40,7 @@ export default function HowItWorks() {
 
   return (
     <section
-      ref={sectionRef}
+      // ref={sectionRef}
       id="how-it-works"
       className="relative py-28 bg-brand-black overflow-hidden"
     >
