@@ -33,32 +33,32 @@ export default function PricingCard({
   return (
     <div
       className={`
-        col-span-1 px-6 flex flex-col border-r border-[#1E1E1E] last:border-0 relative transition-all duration-300
+        col-span-1 p-1 md:px-6 flex flex-col border-r border-[#1E1E1E] last:border-0 relative transition-all duration-300
         ${
           plan.highlight
-            ? 'bg-[#121212] border-[#FF9F1C] border-l border-r z-10 -my-4 py-4 rounded-lg pricing-card-growth'
-            : 'py-2'
+            ? 'bg-[#121212] border-[#FF9F1C] border-l border-r z-10 my-0 py-0 md:-my-4 md:py-4 rounded-lg pricing-card-growth'
+            : 'py-0 md:py-2'
         }
         ${!isAvailable ? 'opacity-30 grayscale pointer-events-none' : ''}
       `}
     >
       {/* Popular Badge */}
       {plan.highlight && !isSticky && isAvailable && (
-        <div className="absolute top-0 right-0 bg-[#FF9F1C] text-black text-[10px] font-bold uppercase tracking-wider py-1 px-3 rounded-bl-lg rounded-tr-lg">
+        <div className="hidden md:block absolute top-0 right-0 bg-[#FF9F1C] text-black text-[10px] font-bold uppercase tracking-wider py-1 px-3 rounded-bl-lg rounded-tr-lg">
           Most Popular
         </div>
       )}
 
       {/* Header */}
-      <div className="mb-4 pt-2">
-        <div className="flex items-center gap-2 mb-2">
+      <div className="mb-2 md:mb-4 pt-0 md:pt-2">
+        <div className="flex items-center gap-2 md:mb-2">
           <Icon
-            className={`w-5 h-5 ${
+            className={`w-5 h-5 hidden md:flex ${
               plan.highlight ? 'text-[#FF9F1C]' : 'text-[#888888]'
             }`}
           />
           <h3
-            className={`text-lg font-bold ${
+            className={`text-[13px] md:text-lg font-bold ${
               plan.highlight ? 'text-white' : 'text-[#E1E1E1]'
             }`}
           >
@@ -66,40 +66,40 @@ export default function PricingCard({
           </h3>
         </div>
         {!isSticky && (
-          <p className="text-xs font-mono text-[#888888] min-h-[32px] leading-tight">
+          <p className="hidden md:block text-xs font-mono text-[#888888] min-h-[32px] leading-tight">
             {plan.description}
           </p>
         )}
       </div>
 
       {/* Pricing */}
-      <div className="mb-4 mt-auto">
+      <div className="md:mb-4 md:mt-auto">
         {isAvailable ? (
           <>
             {displayPrice !== null ? (
-              <div className="flex items-baseline mb-4">
+              <div className="flex items-baseline m-0 md:mb-4">
                 <span
-                  className={`text-3xl font-bold tracking-tight ${
+                  className={`text-[10px] md:text-3xl font-bold tracking-tight ${
                     plan.highlight ? 'text-[#FF9F1C]' : 'text-white'
                   }`}
                 >
                   {symbol}
                   {displayPrice}
                 </span>
-                <span className="text-[#888888] text-xs font-mono ml-1">/mo</span>
+                <span className="text-[#888888] text-[10px] md:text-xs font-mono ml-0 md:ml-1">/mo</span>
               </div>
             ) : (
-              <div className="flex items-center h-[52px] mb-4">
-                <span className="text-2xl font-bold text-white">Let's Talk</span>
+              <div className="flex items-center md:h-[52px] m-0 md:mb-4">
+                <span className="text-[10px] md:text-2xl font-bold text-white">Let's Talk</span>
               </div>
             )}
 
             {plan.highlight ? (
-              <button className="btn-shine w-full py-3 rounded bg-[#FF9F1C] text-black font-bold text-sm hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(255,159,28,0.3)]">
+              <button className="hidden md:block btn-shine w-full py-3 rounded bg-[#FF9F1C] text-black font-bold text-sm hover:bg-white hover:text-black transition-all shadow-[0_0_20px_rgba(255,159,28,0.3)]">
                 {displayPrice !== null ? 'Start Growth' : 'Contact Sales'}
               </button>
             ) : (
-              <button className="btn-shine w-full py-3 rounded border border-[#1E1E1E] text-white font-mono text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all">
+              <button className="hidden md:block btn-shine w-full py-3 rounded border border-[#1E1E1E] text-white font-mono text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all">
                 {displayPrice !== null
                   ? price < 1000
                     ? 'Start Basic'

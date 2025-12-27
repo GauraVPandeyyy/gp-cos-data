@@ -37,20 +37,20 @@ export default function FeatureRow({ name, launch, growth, ultra, enterprise }) 
   };
 
   return (
-    <div className="grid grid-cols-5 border-b border-[#1E1E1E] hover:bg-[#121212] transition-colors group">
-      <div className="col-span-1 py-4 pr-4 pl-4 text-sm text-[#888888] font-medium flex items-center border-r border-[#1E1E1E] bg-[#050505] sticky left-0 z-10 group-hover:text-[#E1E1E1] transition-colors">
+    <div className="grid grid-cols-6 md:grid-cols-5 border-b border-[#1E1E1E] hover:bg-[#121212] transition-colors group">
+      <div className="col-span-2 md:col-span-1 p-0 md:py-4 md:pr-4 md:pl-4 text-sm text-[#888888] font-medium flex items-center border-r border-[#1E1E1E] bg-[#050505] sticky left-0 z-10 group-hover:text-[#E1E1E1] transition-colors">
         {name}
       </div>
-      <div className="col-span-1 py-4 px-2 flex items-center justify-center border-r border-[#1E1E1E]">
+      <div className="col-span-1 p-0 md:py-4 md:px-2 flex items-center justify-center border-r border-[#1E1E1E]">
         {renderCell(launch, false)}
       </div>
-      <div className="col-span-1 py-4 px-2 flex items-center justify-center border-r border-[#1E1E1E] bg-[#FF9F1C]/[0.03]">
+      <div className="col-span-1 p-0 md:py-4 md:px-2 flex items-center justify-center border-r border-[#1E1E1E] bg-[#FF9F1C]/[0.03]">
         {renderCell(growth, true)}
       </div>
-      <div className="col-span-1 py-4 px-2 flex items-center justify-center border-r border-[#1E1E1E]">
+      <div className="col-span-1 p-0 md:py-4 md:px-2 flex items-center justify-center border-r border-[#1E1E1E]">
         {renderCell(ultra, false)}
       </div>
-      <div className="col-span-1 py-4 px-2 flex items-center justify-center">
+      <div className="col-span-1 p-0 md:py-4 md:px-2 flex items-center justify-center">
         {renderCell(enterprise, false)}
       </div>
     </div>

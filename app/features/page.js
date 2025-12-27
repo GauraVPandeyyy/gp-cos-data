@@ -13,21 +13,22 @@ import PricingCards from '../components/features/PricingCards';
 import FeaturesTable from '../components/features/FeaturesTable';
 import FeaturesCTA from '../components/features/FeaturesCTA';
 import { CONTACT_TIERS, PLANS, FEATURES_DATA } from '../data/featuresData';
+import { useCurrency } from '../hooks/useCurrency';
 
 export default function FeaturesPage() {
   const [sliderIndex, setSliderIndex] = useState(0);
   const [billingCycle, setBillingCycle] = useState('monthly');
-  const [currency, setCurrency] = useState('INR');
+  // const [currency, setCurrency] = useState('INR');
 
   // Get user's location and auto-set currency
-  const { country, currency: detectedCurrency, isLoading } = useGeolocation();
+const { currency, setCurrency, country, isLoading } = useCurrency('INR');
 
   // Auto-set currency based on detected location (only once on mount)
-  useEffect(() => {
-    if (detectedCurrency && !isLoading) {
-      setCurrency(detectedCurrency);
-    }
-  }, [detectedCurrency, isLoading]);
+  // useEffect(() => {
+  //   if (detectedCurrency && !isLoading) {
+  //     setCurrency(detectedCurrency);
+  //   }
+  // }, [detectedCurrency, isLoading]);
 
   const selectedTier = CONTACT_TIERS[sliderIndex];
 
@@ -40,7 +41,7 @@ export default function FeaturesPage() {
 
         {/* Controls Section */}
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="flex flex-col md:flex-row justify-center items-end gap-12 mt-10 mb-8">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-12 mt-10 mb-8">
             {/* Contact Slider */}
             <ContactSlider
               tiers={CONTACT_TIERS}
@@ -69,7 +70,7 @@ export default function FeaturesPage() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 relative">
+        <div className="max-w-7xl mx-auto px-2 md:px-4 relative">
           {/* Pricing Cards */}
           <PricingCards
             plans={PLANS}

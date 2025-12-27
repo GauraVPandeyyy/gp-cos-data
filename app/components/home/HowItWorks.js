@@ -1,26 +1,27 @@
 // components/home/HowItWorks.js
-import { Layers } from 'lucide-react';
+import { Layers, Link, PenTool, TrendingUp } from "lucide-react";
 
 const steps = [
   {
-    number: '01',
-    label: 'CONNECT',
-    title: 'Connect Your Domain',
-    description: 'Our setup assistant verifies your domain (SPF/DKIM) instantly.',
+    number: "01",
+    label: "CONNECT",
+    title: "Connect Your Domain",
+    description:
+      "Our setup assistant verifies your domain (SPF/DKIM) instantly.",
   },
   {
-    number: '02',
-    label: 'BUILD',
-    title: 'Create Campaigns',
+    number: "02",
+    label: "BUILD",
+    title: "Create Campaigns",
     description:
       'Drag, drop, and design. Use AI-suggested "Blueprints" to launch instantly.',
   },
   {
-    number: '03',
-    label: 'GROW',
-    title: 'Analyze & Scale',
+    number: "03",
+    label: "GROW",
+    title: "Analyze & Scale",
     description:
-      'See who clicks what with visual heatmaps and turn raw data into insights.',
+      "See who clicks what with visual heatmaps and turn raw data into insights.",
   },
 ];
 
@@ -51,11 +52,23 @@ export default function HowItWorks() {
               className="group p-8 border border-brand-border bg-brand-surface rounded-2xl hover:border-brand-orange transition-colors duration-300 relative overflow-hidden"
             >
               <div className="noise-overlay"></div>
-              <div className="font-mono text-brand-orange mb-6 text-xs border border-brand-orange/20 inline-block px-2 py-1 rounded bg-brand-orange/5">
-                {step.number}_{step.label}
+              <div className="flex items-center gap-2 mb-6">
+                <div className="p-2 rounded-md bg-brand-orange/10 text-brand-orange border border-brand-orange/20">
+                  {step.label === "CONNECT" && <Link className="w-4 h-4" />}
+                  {step.label === "BUILD" && <PenTool className="w-4 h-4" />}
+                  {step.label === "GROW" && <TrendingUp className="w-4 h-4" />}
+                </div>
+
+                <span className="font-mono text-[11px] tracking-widest text-brand-orange/80">
+                  {step.label}
+                </span>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
-              <p className="text-brand-textMuted text-sm leading-relaxed mb-4">
+
+              <h3 className="text-[22px] font-semibold text-white mb-3 leading-snug tracking-tight">
+                {step.title}
+              </h3>
+
+              <p className="text-brand-textMuted text-sm leading-relaxed max-w-sm">
                 {step.description}
               </p>
             </div>

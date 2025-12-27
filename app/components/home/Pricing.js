@@ -1,7 +1,7 @@
 // components/home/Pricing.js
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Zap,
   Layout,
@@ -12,13 +12,19 @@ import {
   Code,
 } from "lucide-react";
 import gsap from "gsap";
+import CurrencyToggle from "../features/CurrencyToggle";
+import { useGeolocation } from "@/app/hooks/useGeolocation";
+import BillingToggle from "../features/BillingToggle";
+import { useCurrency } from "@/app/hooks/useCurrency";
 
 const pricingPlans = [
   {
     name: "Launch",
     description: "Perfect for testing & side projects.",
-    monthlyPrice: 4.99,
-    yearlyPrice: 3.99,
+    prices: {
+      USD: { monthly: 4.99, yearly: 3.99 },
+      INR: { monthly: 399, yearly: 299 },
+    },
     features: [
       { icon: "text", label: "500 Contacts" },
       { icon: "text", label: "2,000 Emails/mo" },
@@ -31,8 +37,10 @@ const pricingPlans = [
   {
     name: "Growth",
     description: "For professional marketers.",
-    monthlyPrice: 15.99,
-    yearlyPrice: 12.99,
+    prices: {
+      USD: { monthly: 15.99, yearly: 12.99 },
+      INR: { monthly: 1299, yearly: 999 },
+    },
     features: [
       { icon: "text", label: "2,500 Contacts" },
       { icon: "text", label: "10,000 Emails/mo" },
@@ -51,8 +59,10 @@ const pricingPlans = [
   {
     name: "Ultra",
     description: "Maximum performance.",
-    monthlyPrice: 29.99,
-    yearlyPrice: 23.99,
+    prices: {
+      USD: { monthly: 29.99, yearly: 23.99 },
+      INR: { monthly: 2499, yearly: 1999 },
+    },
     features: [
       { icon: "text", label: "UNLIMITED Contacts" },
       { icon: "text", label: "100,000 Emails/mo" },
@@ -67,26 +77,31 @@ const pricingPlans = [
 
 export default function Pricing() {
   const [isYearly, setIsYearly] = useState(false);
+  const { currency, setCurrency, country, isLoading } = useCurrency("INR");
 
   const togglePricing = () => {
-    setIsYearly(!isYearly);
-
-    // Animate price change
-    const prices = document.querySelectorAll(".price-display");
-    prices.forEach(price => {
-      const newVal = !isYearly ? price.dataset.yearly : price.dataset.monthly;
-
-      gsap.to(price, {
-        opacity: 0,
-        duration: 0.1,
-        y: -5,
-        onComplete: () => {
-          price.innerHTML = "$" + newVal;
-          gsap.to(price, { opacity: 1, y: 0, duration: 0.1 });
-        },
-      });
-    });
+    setIsYearly((prev) => !prev);
   };
+
+  useEffect(() => {
+    gsap.fromTo(
+      ".price-display",
+      { opacity: 0, y: -5 },
+      { opacity: 1, y: 0, duration: 0.2 }
+    );
+  }, [isYearly, currency]);
+
+  const formatPrice = (value) => {
+    return new Intl.NumberFormat(undefined, {
+      style: "currency",
+      currency,
+      maximumFractionDigits: 2,
+    }).format(value);
+  };
+  // const price = isYearly
+  //   ? pricingPlans.prices[currency]?.yearly
+  //   : pricingPlans.prices[currency]?.monthly;
+  // const planPrice = pricingPlans.prices[currency] || pricingPlans.prices.USD;
 
   return (
     <section
@@ -106,36 +121,61 @@ export default function Pricing() {
           </p>
         </div>
         {/* <div className="flex-row"> */}
-          {/* Billing Toggle */}
-          <div className="flex justify-center items-center gap-4 mb-16">
-            <span
-              className={`text-sm font-mono ${
-                !isYearly ? "text-brand-textMain" : "text-brand-textMuted"
-              }`}
-            >
-              Monthly
+        {/* Billing Toggle */}
+        <div className="flex md:hidden flex-col items-center gap-4 mb-5">
+          <CurrencyToggle
+            currency={currency}
+            onCurrencyChange={setCurrency}
+            detectedCountry={country}
+            isLoading={isLoading}
+          />
+        </div>
+        <div className="flex justify-center items-center gap-2 md:gap-4 mb-16">
+          <span
+            className={`text-sm font-mono ${
+              !isYearly ? "text-brand-textMain" : "text-brand-textMuted"
+            }`}
+          >
+            Monthly
+          </span>
+          <label className="relative inline-flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              className="sr-only peer"
+              checked={isYearly}
+              onChange={togglePricing}
+            />
+            <div className="w-14 h-7 bg-brand-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-brand-orange"></div>
+          </label>
+          <span
+            className={`text-sm font-mono ${
+              isYearly ? "text-brand-textMain" : "text-brand-textMuted"
+            }`}
+          >
+            Yearly{" "}
+            <span className="text-brand-orange text-xs ml-1 font-bold">
+              -20%
             </span>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                className="sr-only peer"
-                checked={isYearly}
-                onChange={togglePricing}
-              />
-              <div className="w-14 h-7 bg-brand-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-brand-orange"></div>
-            </label>
-            <span
-              className={`text-sm font-mono ${
-                isYearly ? "text-brand-textMain" : "text-brand-textMuted"
-              }`}
-            >
-              Yearly{" "}
-              <span className="text-brand-orange text-xs ml-1 font-bold">
-                -20%
-              </span>
-            </span>
+          </span>
+          <div className="hidden md:flex flex-col items-center md:items-end gap-4 md:ms-5">
+            <CurrencyToggle
+              currency={currency}
+              onCurrencyChange={setCurrency}
+              detectedCountry={country}
+              isLoading={isLoading}
+            />
           </div>
-          {/* <div>
+        </div>
+        {/* <div className="flex md:hidden flex-col items-end gap-4">
+          <CurrencyToggle
+            currency={currency}
+            onCurrencyChange={setCurrency}
+            detectedCountry={country}
+            isLoading={isLoading}
+          />
+        </div> */}
+
+        {/* <div>
             <a
               href="/compare"
               className="btn-swipe px-8 py-4 border border-brand-border text-brand-textMain font-mono text-sm rounded-md shadow-sm bg-brand-orange/30 transition-colors"
@@ -174,11 +214,14 @@ export default function Pricing() {
                   className={`price-display text-3xl font-bold ${
                     plan.highlight ? "text-brand-orange text-4xl" : "text-white"
                   }`}
-                  data-monthly={plan.monthlyPrice}
-                  data-yearly={plan.yearlyPrice}
                 >
-                  ${isYearly ? plan.yearlyPrice : plan.monthlyPrice}
+                  {formatPrice(
+                    isYearly
+                      ? (plan.prices[currency] || plan.prices.USD).yearly
+                      : (plan.prices[currency] || plan.prices.USD).monthly
+                  )}
                 </span>
+
                 <span className="text-brand-textMuted text-sm ml-1">/mo</span>
               </div>
               <a

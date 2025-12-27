@@ -32,7 +32,7 @@ const FeaturePanel = forwardRef(function FeaturePanel(
     >
       <div className="noise-overlay pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto w-full px-6 py-24 md:py-32 grid md:grid-cols-2 gap-6 md:gap-12 items-center">
+      <div className="max-w-7xl mx-auto w-full px-6 py-12 md:py-32 grid md:grid-cols-2 gap-0 md:gap-12 items-center">
         <div className={`space-y-8 ${order === 'text-first' ? 'order-2 md:order-1' : 'order-2'}`}>
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-brand-orange/10 rounded-lg flex items-center justify-center border border-brand-orange/20">
@@ -41,7 +41,7 @@ const FeaturePanel = forwardRef(function FeaturePanel(
             <h3 className="text-2xl font-bold text-white">{title}</h3>
           </div>
 
-          <p className="text-xl text-brand-textMuted leading-relaxed max-w-lg">
+          <p className="text-xl text-brand-textMuted leading-normal md:leading-relaxed max-w-lg">
             {description}
           </p>
 

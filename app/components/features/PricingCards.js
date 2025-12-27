@@ -36,16 +36,16 @@ export default function PricingCards({
 
   return (
     <div
-      className={`grid grid-cols-1 md:grid-cols-5 pt-10 pb-2 transition-all duration-300 ${
+      className={`grid grid-cols-6 md:grid-cols-5 px-0 w-full pb-4 shadow m-0 pt-16 md:pt-10 md:pb-2 transition-all duration-300 ${
         isSticky
-          ? "sticky top-0 z-30 bg-[#050505]/95 backdrop-blur-md border-b border-[#1E1E1E]"
+          ? "sticky top-0 z-30 bg-[#050505]/95  backdrop-blur-md border-b border-[#1E1E1E]"
           : ""
       }`}
     >
       {/* Intro / CTA Column */}
-      <div className="hidden md:flex col-span-1 flex-col justify-end pr-6 pb-6 border-r border-transparent">
+      <div className="flex col-span-2 md:col-span-1 flex-col justify-center px-1 md:px-6 pb-1 md:pb-6 border-r border-transparent">
         {isSticky ? (
-          <span className="font-bold text-xl text-white">Compare Plans</span>
+          <span className="font-bold text-sm md:text-4xl text-white">Compare Plans</span>
         ) : (
           <div className="text-sm text-[#888888] italic">
             All plans include 24/7 access to our knowledge base and community.

@@ -5,7 +5,7 @@ import FeatureRow from './FeatureRow';
 
 export default function FeaturesTable({ featuresData }) {
   return (
-    <div id="features-table" className="border-t border-[#1E1E1E] mt-4">
+    <div id="features-table" className="border-t border-[#1E1E1E] mt-4 overflow-hidden">
       {Object.entries(featuresData).map(([category, features]) => (
         <div key={category}>
           <CategoryHeader title={category} />

@@ -45,7 +45,7 @@ export default function Footer() {
                 />
                 <polygon points="380 150 450 275 550 50" fill="url(#polyGradient)" filter="url(#polyGlow)"/>
               </svg>
-              <span className="font-bold text-2xl text-white -ml-4 tracking-tight" style={{ fontFamily: "var(--font-funnel-display)" }}>Inwren</span>
+              <span className="font-bold text-2xl text-white -ml-4 tracking-tight" style={{ fontFamily: "var(--font-funnel-display)" }}>InWren</span>
             </a>
             <p className="text-brand-textMuted max-w-sm mb-6">
               The intelligent email platform for teams who value growth over guesswork.

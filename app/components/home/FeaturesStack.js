@@ -23,15 +23,15 @@ const featuresData = [
       "Readability, tone, and intent analysis",
     ],
     visual: (
-      <div className="glass-card w-[73%] sm:w-[50%] md:w-[60%] aspect-square rounded-3xl mb-8 p-1 md:p-4 flex flex-col justify-center items-center relative overflow-hidden">
+      <div className="glass-card w-[55%] sm:w-[50%] md:w-[60%] aspect-square rounded-3xl mb-8 p-0 md:p-4 flex flex-col justify-center items-center relative overflow-hidden">
         <div className="absolute inset-0 bg-brand-orange/5 blur-3xl"></div>
-        <div className="text-4xl md:text-6xl font-bold text-white mb-2">
+        <div className="text-2xl md:text-6xl font-bold text-white mb-0 md:mb-2">
           99.2%
         </div>
-        <div className="text-brand-textMuted font-mono text-sm uppercase tracking-widest">
+        <div className="text-brand-textMuted font-mono text-xs md:text-sm uppercase tracking-widest">
           Inbox Rate
         </div>
-        <div className="flex items-end gap-2 h-24 md:h-32 mt-8">
+        <div className="flex items-end gap-2 h-16 md:h-32 mt-2 md:mt-8">
           <div className="w-4 bg-brand-border h-[40%] rounded-t"></div>
           <div className="w-4 bg-brand-border h-[60%] rounded-t"></div>
           <div className="w-4 bg-brand-border h-[50%] rounded-t"></div>
@@ -57,22 +57,22 @@ const featuresData = [
       "Built-in compliance guardrails",
     ],
     visual: (
-      <div className="glass-card w-full max-w-sm aspect-4/3 rounded-3xl p-6 mb-8 relative overflow-hidden flex items-center justify-center">
+      <div className="glass-card w-full max-w-sm md:aspect-4/3 rounded-3xl p-6 mb-8 relative overflow-hidden flex items-center justify-center">
         <div className="absolute -right-20 -top-20 w-56 h-56 bg-brand-orange/20 blur-[80px] rounded-full"></div>
-        <div className="space-y-4 w-full">
-          <div className="flex items-center justify-between p-4 rounded-lg bg-black/40 border border-brand-orange/30">
+        <div className="space-y-2 md:space-y-4 w-full">
+          <div className="flex items-center justify-between p-2 md:p-4 rounded-lg bg-black/40 border border-brand-orange/30">
             <span className="font-mono text-sm text-white">
               IP_WARMUP_STATUS
             </span>
             <span className="text-brand-orange font-bold">ACTIVE</span>
           </div>
-          <div className="flex items-center justify-between p-4 rounded-lg bg-black/40 border border-white/5">
+          <div className="flex items-center justify-between p-2 md:p-4 rounded-lg bg-black/40 border border-white/5">
             <span className="font-mono text-sm text-brand-textMuted">
               THROUGHPUT
             </span>
             <span className="text-white font-mono">4,200/min</span>
           </div>
-          <div className="flex items-center justify-between p-4 rounded-lg bg-black/40 border border-white/5">
+          <div className="flex items-center justify-between p-2 md:p-4 rounded-lg bg-black/40 border border-white/5">
             <span className="font-mono text-sm text-brand-textMuted">REPUTATION</span>
             <span className="text-green-400 font-mono">HIGH</span>
           </div>
@@ -96,21 +96,21 @@ const featuresData = [
       "Real-time analytics",
     ],
     visual: (
-      <div className="relative w-full max-w-sm mb-8">
-        <div className="glass-card p-4 rounded-2xl mb-4 transform -rotate-2 translate-x-4 border-l-4 border-l-brand-orange">
+      <div className="relative w-full max-w-sm mb-16">
+        <div className="glass-card p-3 md:p-4 rounded-2xl mb-4 transform -rotate-2 translate-x-4 border-l-4 border-l-brand-orange">
           <div className="text-xs text-brand-textMuted uppercase mb-1">
             Click Rate
           </div>
-          <div className="text-3xl font-bold text-white">
+          <div className="text-xl md:text-3xl font-bold text-white">
             4.8%
             <span className="text-sm text-green-500 ml-2">↑ 12%</span>
           </div>
         </div>
-        <div className="glass-card p-4 rounded-2xl transform rotate-2 -translate-x-4 z-10 relative bg-[#111]">
+        <div className="glass-card p-3 md:p-4 rounded-2xl transform rotate-2 -translate-x-4 z-10 relative bg-[#111]">
           <div className="text-xs text-brand-textMuted uppercase mb-1">
             Open Rate
           </div>
-          <div className="text-3xl font-bold text-white">
+          <div className="text-xl md:text-3xl font-bold text-white">
             42.5%
             <span className="text-sm text-green-500 ml-2">↑ 5%</span>
           </div>

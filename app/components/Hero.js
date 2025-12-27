@@ -6,6 +6,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
 import useLiveDashboard from "../hooks/useLiveDashboard";
 import VerticalCarouselSinSec from "./VerticalCarouselSinSec";
+import Modal from "../components/ui/Modal";
+import StartFreeForm from "../components/forms/StartFreeForm";
 
 gsap.registerPlugin(ScrollTrigger);
 // gsap.registerPlugin(SplitText);
@@ -20,7 +22,7 @@ export default function Hero({ isLoaderComplete }) {
   useEffect(() => {
     // Only animate if loader is complete and hasn't animated yet
     if (!isLoaderComplete || hasAnimated.current) return;
-    
+
     hasAnimated.current = true;
 
     // First, hide the entire title
@@ -31,13 +33,13 @@ export default function Hero({ isLoaderComplete }) {
     const lines = heroTitle.querySelectorAll(".hero-line");
     const chars = [];
 
-    lines.forEach(line => {
+    lines.forEach((line) => {
       const text = line.dataset.text || line.textContent;
       const hasGradient = line.classList.contains("bg-clip-text");
 
       const gradientClasses = hasGradient
         ? Array.from(line.classList).filter(
-            cls =>
+            (cls) =>
               cls.startsWith("bg-") ||
               cls.startsWith("from-") ||
               cls.startsWith("to-") ||
@@ -50,7 +52,7 @@ export default function Hero({ isLoaderComplete }) {
       line.innerHTML = "";
 
       // Create character spans
-      text.split("").forEach(char => {
+      text.split("").forEach((char) => {
         const span = document.createElement("span");
         span.textContent = char === " " ? "\u00A0" : char;
         span.style.display = "inline-block";
@@ -114,9 +116,15 @@ export default function Hero({ isLoaderComplete }) {
     setTitleReady(true);
   }, [isLoaderComplete]);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     // <header className="relative min-h-screen flex items-center justify-center pt-24 lg:pt-32 xl:pt-48 overflow-hidden">
     <header className="relative min-h-screen flex items-center justify-center pt-24 lg:pt-[8vw] overflow-hidden">
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <StartFreeForm onSuccess={() => setIsModalOpen(false)} />
+      </Modal>
+
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.15] grid-bg pointer-events-none"></div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-orange opacity-[0.03] blur-[120px] rounded-full animate-pulse-slow"></div>
       {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30vw] h-[30vw] bg-brand-orange opacity-[0.03] blur-[120px] rounded-full animate-pulse-slow"></div> */}
@@ -134,21 +142,29 @@ export default function Hero({ isLoaderComplete }) {
           {!titleReady ? (
             // Render invisible placeholder during initial render
             <>
-              <span className="hero-line tracking-wide block opacity-0" style={{ fontFamily: "var(--font-funnel-display)" }}>THE INTELLIGENT</span>
-              <span className="hero-line tracking-normal block text-transparent bg-clip-text bg-linear-to-r from-brand-orange to-amber-600 opacity-0" style={{ fontFamily: "var(--font-funnel-display)" }}>
+              <span
+                className="hero-line tracking-wide block opacity-0"
+                style={{ fontFamily: "var(--font-funnel-display)" }}
+              >
+                THE INTELLIGENT
+              </span>
+              <span
+                className="hero-line tracking-normal block text-transparent bg-clip-text bg-linear-to-r from-brand-orange to-amber-600 opacity-0"
+                style={{ fontFamily: "var(--font-funnel-display)" }}
+              >
                 EMAIL ENGINE
               </span>
             </>
           ) : (
             // Render actual text that will be split
             <>
-              <span 
+              <span
                 className="hero-line tracking-wide block"
                 data-text="THE INTELLIGENT"
               >
                 THE INTELLIGENT
               </span>
-              <span 
+              <span
                 className="hero-line tracking-normal block text-transparent bg-clip-text bg-linear-to-r from-brand-orange to-amber-600"
                 data-text="EMAIL ENGINE"
               >
@@ -164,24 +180,24 @@ export default function Hero({ isLoaderComplete }) {
           className="mx-auto my-6 h-px w-0 xl:w-3xl bg-brand-orange rounded-full relative"
         ></div>
 
-
-
         {/* SplitText */}
         <p className="bottom-text text-md sm:text-lg lg:pt-2 md:text-xl xl:text-2xl text-brand-textMuted max-w-2xl mx-auto mb-14 hero-stagger font-light leading-relaxed text-white">
           Send emails with precision. Optimize campaigns with clarity. Built for
-          agencies, SaaS, and high-volume teams who need marketing power without the complexity.
+          agencies, SaaS, and high-volume teams who need marketing power without
+          the complexity.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 xl:gap-8 hero-stagger opacity-0 xl:mb-[4vw] mb-[16vw] lg:mb-0">
-          <a
-            href="#pricing"
+          <button
+            onClick={() => setIsModalOpen(true)}
             className="btn-shine magnetic-btn group relative px-8 py-4 xl:px-12 xl:py-6 bg-brand-orange text-black font-semibold text-lg xl:text-xl transition-colors rounded-md duration-300"
           >
             <span className="relative z-10 flex items-center gap-2">
               Start for Free
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
-          </a>
+          </button>
+
           <a
             href="#how-it-works"
             className="btn-swipe px-8 py-4 xl:px-12 xl:py-6 border border-brand-border text-brand-textMain font-mono text-sm xl:text-lg rounded-md shadow-sm bg-white/10 transition-colors"
@@ -189,7 +205,7 @@ export default function Hero({ isLoaderComplete }) {
             <span>See How It Works</span>
           </a>
         </div>
-        <VerticalCarouselSinSec/>
+        <VerticalCarouselSinSec />
       </div>
     </header>
   );
