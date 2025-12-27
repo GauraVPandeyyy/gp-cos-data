@@ -193,7 +193,7 @@ export default function Hero({ isLoaderComplete }) {
             className="btn-shine magnetic-btn group relative px-8 py-4 xl:px-12 xl:py-6 bg-brand-orange text-black font-semibold text-lg xl:text-xl transition-colors rounded-md duration-300"
           >
             <span className="relative z-10 flex items-center gap-2">
-              Start for Free
+              Get Early Access
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
           </button>
