@@ -23,13 +23,15 @@ const featuresData = [
       "Readability, tone, and intent analysis",
     ],
     visual: (
-      <div className="glass-card w-[55%] sm:w-[50%] md:w-[60%] aspect-square rounded-3xl mb-8 p-0 md:p-4 flex flex-col justify-center items-center relative overflow-hidden">
+      <div className="glass-card w-full h-[50%] md:w-[60%] md:aspect-square rounded-3xl mb-8 py-4 md:p-4 flex md:flex-col gap-8 md:gap-0 justify-center items-center relative overflow-hidden">
         <div className="absolute inset-0 bg-brand-orange/5 blur-3xl"></div>
-        <div className="text-2xl md:text-6xl font-bold text-white mb-0 md:mb-2">
-          99.2%
-        </div>
-        <div className="text-brand-textMuted font-mono text-xs md:text-sm uppercase tracking-widest">
-          Inbox Rate
+        <div>
+          <div className="text-2xl md:text-6xl font-bold text-white mb-0 md:mb-2">
+            99.2%
+          </div>
+          <div className="text-brand-textMuted font-mono text-[9px] md:text-sm uppercase tracking-widest">
+            Inbox Rate
+          </div>
         </div>
         <div className="flex items-end gap-2 h-16 md:h-32 mt-2 md:mt-8">
           <div className="w-4 bg-brand-border h-[40%] rounded-t"></div>
@@ -73,7 +75,9 @@ const featuresData = [
             <span className="text-white font-mono">4,200/min</span>
           </div>
           <div className="flex items-center justify-between p-2 md:p-4 rounded-lg bg-black/40 border border-white/5">
-            <span className="font-mono text-sm text-brand-textMuted">REPUTATION</span>
+            <span className="font-mono text-sm text-brand-textMuted">
+              REPUTATION
+            </span>
             <span className="text-green-400 font-mono">HIGH</span>
           </div>
         </div>
@@ -181,7 +185,7 @@ export default function FeaturesStack() {
           seamlessly.
         </p>
       </div>
-{/*  */}
+      {/*  */}
       <div
         id="feature-progress"
         className="hidden md:flex fixed top-1/2 right-6 -translate-y-1/2 z-40 gap-4 flex-col opacity-0"

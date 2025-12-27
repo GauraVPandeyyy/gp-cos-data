@@ -388,7 +388,6 @@ function PricingDropdown() {
             </a>
           </div>
 
-          
           {/* <div className="px-4 py-3 border-t border-zinc-800 bg-zinc-900/50">
             <a
               href="#"
@@ -398,9 +397,6 @@ function PricingDropdown() {
               <ChevronRight className="w-3 h-3" />
             </a>
           </div> */}
-
-
-          
         </div>
       </div>
     </div>
@@ -544,10 +540,12 @@ export default function Navbar() {
               />
             </svg>
             <span
-              className="font-bold text-2xl tracking-tight text-white -ml-4"
+              className="font-bold text-2xl flex tracking-tight text-white -ml-4"
               style={{ fontFamily: "var(--font-funnel-display)" }}
             >
-              InWren
+              <span>In</span>
+              <span style={{ margin: "0 0.01em" }}>W</span>
+              <span>ren</span>
             </span>
           </Link>
 

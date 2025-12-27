@@ -17,7 +17,7 @@ export default function ComparePage() {
   const tierLabel = TIERS.find((t) => t.value === selectedTier)?.label || '50,000';
 
   return (
-    <>
+    <div className='max-w-full relative overflow-hidden'>
       <Navbar />
       
       <div className="min-h-screen">
@@ -39,6 +39,6 @@ export default function ComparePage() {
       </div>
 
       <Footer />
-    </>
+    </div>
   );
 }
